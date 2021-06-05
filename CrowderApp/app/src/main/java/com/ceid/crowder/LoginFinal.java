@@ -15,8 +15,12 @@ public class LoginFinal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Hide Title Bar Coz Crashes
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login_final);
 
+        //Login Button
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,6 +29,7 @@ public class LoginFinal extends AppCompatActivity {
             }
         });
 
+        //No Account Text
         register = (TextView) findViewById(R.id.notRegistered);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,11 +39,13 @@ public class LoginFinal extends AppCompatActivity {
         });
     }
 
+    //Takes You Home
      public void GoToMain(){
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }
 
+    //Takes To Registration
     public void GoToRegistration(){
         Intent intent = new Intent(this, Registration.class);
         startActivity(intent);

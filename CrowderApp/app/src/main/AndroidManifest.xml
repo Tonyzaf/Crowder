@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CrowderPreAlpha">
-        <activity android:name=".Registration"></activity>
+        <activity android:name=".RegistrationComplete" />
+        <activity android:name=".Registration" />
 
         <uses-library
             android:name="com.google.android.wearable"
@@ -29,8 +30,7 @@
 
         <activity
             android:name=".LoginFinal"
-            android:label="@string/title_activity_login"
-            >
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

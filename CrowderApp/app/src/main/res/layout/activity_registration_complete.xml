@@ -124,4 +124,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/registrationprogress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="317dp"
+        android:layout_height="27dp"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="563dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

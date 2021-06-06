@@ -21,9 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegistrationComplete extends AppCompatActivity {
 
     private Button register;
-    private String email,username,password;
-
-    Registration obj = new Registration();
 
     EditText mname,maddress,mpostcode,mcity;
 

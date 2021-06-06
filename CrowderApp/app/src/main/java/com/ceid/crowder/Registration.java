@@ -23,10 +23,10 @@ public class Registration extends AppCompatActivity {
     private Button next;
     private CheckBox terms;
     private boolean accepted = false;
-    EditText musername;
-    EditText memail;
-    EditText mpassword;
-    EditText mreppassword;
+    private EditText musername;
+    private EditText memail;
+    private EditText mpassword;
+    private EditText mreppassword;
 
     ProgressBar registrationprogress;
     FirebaseAuth fAuth;
@@ -42,10 +42,6 @@ public class Registration extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         registrationprogress = findViewById(R.id.registrationprogress2);
-
-        if(fAuth.getCurrentUser() != null){
-            GoToMain();
-        }
 
         //Terms of Service Checkbox
         terms = (CheckBox) findViewById(R.id.terms);
@@ -109,7 +105,7 @@ public class Registration extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(Registration.this,"Η Εγγραφή Ήταν Επιτυχής!",Toast.LENGTH_SHORT).show();
-                                FinishRegistration();
+                                GoToLogin();
                             }
                             else{
                                 Toast.makeText(Registration.this,"Η Εγγραφή Απέτυχε." + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
@@ -126,8 +122,8 @@ public class Registration extends AppCompatActivity {
         });
     }
 
-    public void FinishRegistration() {
-        Intent intent = new Intent(this, RegistrationComplete.class);
+    public void GoToLogin(){
+        Intent intent = new Intent(this, LoginFinal.class);
         startActivity(intent);
     }
 

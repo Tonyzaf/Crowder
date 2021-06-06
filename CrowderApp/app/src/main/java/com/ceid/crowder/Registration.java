@@ -41,6 +41,14 @@ public class Registration extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
 
+        if (fAuth.getInstance().getCurrentUser() == null) {
+            //Go to login
+        }
+        else{
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            GoToMain();
+        }
+
         registrationprogress = findViewById(R.id.registrationprogress2);
 
         //Terms of Service Checkbox

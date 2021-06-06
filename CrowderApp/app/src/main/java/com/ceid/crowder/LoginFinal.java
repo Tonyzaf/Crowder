@@ -24,7 +24,7 @@ public class LoginFinal extends AppCompatActivity {
     private TextView register;
     private EditText memail,mpass;
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,11 @@ public class LoginFinal extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login_final);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        if (fAuth.getInstance().getCurrentUser() == null) {
             //Go to login
         }
         else{
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String uid = fAuth.getInstance().getCurrentUser().getUid();
             GoToMain();
         }
 
@@ -64,7 +64,7 @@ public class LoginFinal extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -73,6 +73,7 @@ public class LoginFinal extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(LoginFinal.this,"Η Σύνδεση Απέτυχε.",Toast.LENGTH_SHORT).show();
+                            GoToLogin();
                         }
                     }
                 });

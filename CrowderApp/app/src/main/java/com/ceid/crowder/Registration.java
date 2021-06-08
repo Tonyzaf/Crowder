@@ -113,7 +113,7 @@ public class Registration extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(Registration.this,"Η Εγγραφή Ήταν Επιτυχής!",Toast.LENGTH_SHORT).show();
-                                GoToLogin();
+                                FinishRegistration();
                             }
                             else{
                                 Toast.makeText(Registration.this,"Η Εγγραφή Απέτυχε." + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
@@ -135,8 +135,13 @@ public class Registration extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void FinishRegistration(){
+        Intent intent = new Intent(this, FinishRegistration.class);
+        startActivity(intent);
+    }
+
     public void GoToMain(){
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 }

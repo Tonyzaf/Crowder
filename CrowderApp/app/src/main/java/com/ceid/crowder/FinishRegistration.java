@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,22 +22,24 @@ import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class FinishRegistration extends AppCompatActivity {
+public class FinishRegistration<Firebase> extends AppCompatActivity {
 
     FirebaseAuth fAuth;
-    FirebaseDatabase database;
-    DatabaseReference databaseReference;
+    DatabaseReference dbref;
     ScrollView stores;
     StorageReference storageRef;
     private EditText mname;
     private EditText maddress;
     private EditText mpostcode;
     private EditText mcity;
-    private Button finish;
+    private Button finishbtn;
     private String name;
     private String address;
     private String postcode;
     private String city;
+    private String userid;
+    ListView UserInfo;
+    FirebaseUser fuser;
     User user;
 
     @Override
@@ -44,21 +48,32 @@ public class FinishRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_finishregistration);
 
         fAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        storageRef = FirebaseStorage.getInstance().getReference();
+
+        DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        user = new User();
 
         if (fAuth.getInstance().getCurrentUser() == null) {
             GoToLogin();
         }
 
-        finish = findViewById(R.id.finish);
-        finish.setOnClickListener(new View.OnClickListener() {
+        finishbtn = (Button) findViewById(R.id.finish);
+        finishbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Gets UserID
+                userid = fAuth.getUid();
+                user.setUserID(userid);
+                //Gets Input Data
                 name = mname.getText().toString().trim();
+                user.SetName(name);
                 address = maddress.getText().toString().trim();
+                user.SetAddress(address);
                 postcode = mpostcode.getText().toString().trim();
+                user.SetPostCode(postcode);
                 city = mcity.getText().toString().trim();
+                user.SetCity(city);
 
                 if(TextUtils.isEmpty(address)){
                     maddress.setError("Παρακαλώ Εισάγετε Μία Διεύθυνση.");
@@ -80,7 +95,9 @@ public class FinishRegistration extends AppCompatActivity {
                     return;
                 }
 
-                addDatatoFirebase(name, address, postcode, city);
+                dbref.push().setValue(user);
+                Toast.makeText(FinishRegistration.this ,"Τα Στοιχεία Ενημερώθηκαν Επιτυχώς!",Toast.LENGTH_LONG).show();
+                GoToMain();
             }
         });
 
@@ -95,37 +112,6 @@ public class FinishRegistration extends AppCompatActivity {
 
     }
 
-    private void addDatatoFirebase(String name, String address, String postcode, String city) {
-        // below 3 lines of code is used to set
-        // data in our object class.
-        user.SetName(name);
-        user.SetCity(city);
-        user.SetAddress(address);
-        user.SetPostCode(postcode);
-
-        // we are use add value event listener method
-        // which is called with database reference.
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot snapshot) {
-                // inside the method of on Data change we are setting
-                // our object class to our database reference.
-                // data base reference will sends data to firebase.
-                databaseReference.setValue(user);
-
-                // after adding this data we are showing toast message.
-                Toast.makeText(FinishRegistration.this, "data added", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled( DatabaseError error) {
-                // if the data is not added or it is cancelled then
-                // we are displaying a failure toast message.
-                Toast.makeText(FinishRegistration.this, "Fail to add data " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
         GoToLogin();
@@ -133,6 +119,11 @@ public class FinishRegistration extends AppCompatActivity {
 
     public void GoToLogin(){
         Intent intent = new Intent(this, LoginFinal.class);
+        startActivity(intent);
+    }
+
+    public void GoToMain(){
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 }

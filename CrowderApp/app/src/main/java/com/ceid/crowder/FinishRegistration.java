@@ -22,6 +22,10 @@ import com.google.firebase.storage.StorageReference;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class FinishRegistration<Firebase> extends AppCompatActivity {
 
     FirebaseAuth fAuth;
@@ -38,6 +42,8 @@ public class FinishRegistration<Firebase> extends AppCompatActivity {
     private String postcode;
     private String city;
     private String userid;
+    Connection connect;
+    String ConnectionResult = "";
     ListView UserInfo;
     FirebaseUser fuser;
     User user;
@@ -95,8 +101,7 @@ public class FinishRegistration<Firebase> extends AppCompatActivity {
                     return;
                 }
 
-                dbref.push().setValue(user);
-                Toast.makeText(FinishRegistration.this ,"Τα Στοιχεία Ενημερώθηκαν Επιτυχώς!",Toast.LENGTH_LONG).show();
+                InsertUserData(userid,name,address,city,postcode);
                 GoToMain();
             }
         });
@@ -110,6 +115,24 @@ public class FinishRegistration<Firebase> extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_finishregistration);
 
+    }
+
+    public void InsertUserData(String userid, String name, String Address, String City, String Postcode){
+        try{
+            ConnectionHelper connectionHelper = new ConnectionHelper();
+            connect = connectionHelper.connectionclass();
+            if(connect != null){
+                String query = "INSERT INTO users VALUES (" + userid  + "," + name + "," + Address + "," + City + "," + Postcode + ");" ;
+                Statement st = connect.createStatement();
+                ResultSet rs = st.executeQuery(query);
+            }
+            else{
+                ConnectionResult = "Ελέγξτε Την Σύνδεση Σας Στο Διαδίκτυο!";
+            }
+        }
+        catch(Exception ex){
+
+        }
     }
 
     public void logout(View view) {

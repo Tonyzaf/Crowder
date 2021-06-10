@@ -3,21 +3,28 @@ CREATE DATABASE crowder;
 USE crowder;
 
 CREATE TABLE store (
-    storeID int,
-    people int,
-    PRIMARY KEY (storeID)
+     storeID varchar(45),
+     people  int,
+     name  varchar(45),
+     city  varchar (45),
+     address varchar (45),
+     postcode  varchar (45),
+     PRIMARY KEY (storeID)
 );
 
 CREATE TABLE users(
-    userID int,
-    email varchar(45),
-    PRIMARY KEY (userID)
+    userID varchar(45),
+    PRIMARY KEY (userID),
+    name varchar(45),
+    address varchar(45),
+    city varchar(45),
+    postcode varchar(45)
 ) ;
 
 CREATE TABLE Reservations(
-    ResID int,
-    userID int,
-    storeID int,
+    ResID varchar(45),
+    userID varchar(45),
+    storeID varchar(45),
     time DATETIME,
     PRIMARY KEY (ResID),
     CONSTRAINT user FOREIGN KEY (userID) REFERENCES users(userID)

@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CrowderPreAlpha">
-        <activity android:name=".Home"></activity>
+        <activity android:name=".Results"></activity>
+        <activity android:name=".Home" />
         <activity android:name=".Registration" />
 
         <uses-library

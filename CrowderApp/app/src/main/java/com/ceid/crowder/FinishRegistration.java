@@ -42,6 +42,7 @@ public class FinishRegistration<Firebase> extends AppCompatActivity {
     private String postcode;
     private String city;
     private String userid;
+    private ResultSet rs;
     Connection connect;
     String ConnectionResult = "";
     ListView UserInfo;

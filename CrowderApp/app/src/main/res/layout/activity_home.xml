@@ -6,17 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".Home">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="226dp"
+        android:layout_height="223dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="93dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_clear" />
+
     <Button
         android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="341dp"
-        android:layout_marginEnd="137dp"
-        android:layout_marginBottom="342dp"
+        android:layout_width="139dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="304dp"
+        android:layout_marginEnd="256dp"
         android:text="Αποσυνδεση"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="8sp"
+        app:icon="@drawable/ic_baseline_arrow_back_ios_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search" />
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="406dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="3dp"
+        android:clipToPadding="false"
+        android:contextClickable="true"
+        android:fadingEdge="horizontal|vertical"
+        android:foregroundTint="#332F2F"
+        android:inputType="text"
+        android:queryHint="Εισάγετε Το Όνομα Του Καταστήματος"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/searchbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="αναζητηση"
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="399dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,20 +4,33 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 import pyrebase
+import mysql.connector
 
-root = Tk()
+root = tk.Tk()
 
-# Δημιουργία αρχικής οθόνης
+# Δημιουργία style
 style = ttk.Style(root)
 root.tk.call('source', 'azure.tcl')
 style.theme_use('azure')
+root.option_add('*Font', "Arial")
+
+#icon-ονομασία
 root.title("Crowder")
 root.iconbitmap("favicon.ico")
-root.geometry("900x700")
-root.option_add('*Font', "Arial")
+
 logo = ImageTk.PhotoImage(Image.open("crowder.png"))
-label = Label(image=logo)
+label = ttk.Label(image=logo)
 label.pack()
+
+#διαστάσεις παραθύρου
+window_width = 900
+window_height = 700
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+center_x = int(screen_width/2 - window_width / 2)
+center_y = int(screen_height/2 - window_height / 2)
+root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+root.resizable(False, False)
 
 #firebase
 firebaseConfig = {
@@ -34,25 +47,36 @@ auth = firebase.auth()
 storage = firebase.storage()
 db = firebase.database()
 
+#Σύνδεση με την sql
+mydb = mysql.connector.connect(
+  host="35.234.101.122",
+  user="root",
+  password="kwdikos123",
+  database="crowder"
+)
+
+mycursor = mydb.cursor()
+
 
 def login():
     # Σύνδεση
     global email, password
-    Label(root, text="Email χρήστη:").pack()
-    email = Entry(root, textvariable="email")
+    ttk.Label(root, text="Email χρήστη:").pack()
+    email = ttk.Entry(root, textvariable="email")
     email.pack()
-    Label(root, text="").pack()
-    Label(root, text="Κώδικός σύνδεσης:").pack()
-    password = Entry(root, textvariable="password", show='●')
+    ttk.Label(root, text="").pack()
+    ttk.Label(root, text="Κώδικός σύνδεσης:").pack()
+    password = ttk.Entry(root, textvariable="password", show='●')
     password.pack()
-    Label(root, text="").pack()
+    ttk.Label(root, text="").pack()
     # create Login Button
-    button = Button(text="Είσοδος", height="2", width="30", bg='#FFA6F9', command=lambda: eisodos(root))
+    button = tk.Button(root, text="Είσοδος", height="2", width="30", bg='#49A2F8', command=lambda: eisodos(root))
     button.pack()
-    Label(root, text="").pack()
-    Label(root, text="Δεν έχετε λογιαριασμό; Εγγραφείτε εδώ:", ).pack()
-    button = Button(text="Εγγραφή", height="2", width="30", bg='#FFA6F9', command=lambda: eggrafh(root))
+    ttk.Label(root, text="").pack()
+    ttk.Label(root, text="Δεν έχετε λογιαριασμό; Εγγραφείτε εδώ:", ).pack()
+    button = ttk.Button(root, text="Εγγραφή", command=lambda: eggrafh(root))
     button.pack()
+    root.bind('<Return>', eisodose)
 
 
 def eisodos(root):
@@ -61,7 +85,17 @@ def eisodos(root):
         root.destroy()
         import arxikh
     except:
-        messagebox.showwarning("Crowder", "Δεν υπάρχει αυτός ο χρήστης")
+        messagebox.showwarning("Crowder", "Χμμ... κάτι δεν πήγε καλά,ξαναδοκίμασε να εισάγεις τα στοιχεία σου")
+
+
+def eisodose(e):
+    if ((email.get()!= '') and (password.get()!='')):
+        try:
+            login = auth.sign_in_with_email_and_password(email=email.get(), password=password.get())
+            root.destroy()
+            import arxikh
+        except:
+            messagebox.showwarning("Crowder", "Χμμ... κάτι δεν πήγε καλά,ξαναδοκίμασε να εισάγεις τα στοιχεία σου")
 
 
 def eggrafh(root):

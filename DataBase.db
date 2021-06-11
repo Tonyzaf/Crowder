@@ -1,0 +1,34 @@
+CREATE DATABASE crowder;
+
+USE crowder;
+
+CREATE TABLE store (
+     storeID varchar(45),
+     people  int,
+     name  varchar(45),
+     city  varchar (45),
+     address varchar (45),
+     postcode  varchar (45),
+     PRIMARY KEY (storeID)
+);
+
+CREATE TABLE users(
+    userID varchar(45),
+    PRIMARY KEY (userID),
+    name varchar(45),
+    address varchar(45),
+    city varchar(45),
+    postcode varchar(45)
+) ;
+
+CREATE TABLE Reservations(
+    ResID varchar(45),
+    userID varchar(45),
+    storeID varchar(45),
+    time DATETIME,
+    PRIMARY KEY (ResID),
+    CONSTRAINT user FOREIGN KEY (userID) REFERENCES users(userID)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT store FOREIGN KEY (storeID) REFERENCES store(storeID)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
